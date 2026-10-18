@@ -32,14 +32,16 @@ class QuantumBellProver(BaseProver):
 
     def __init__(self, noise_prob: float = 0.0):
         self.simulator = BellStateSimulator(noise_prob=noise_prob)
-        # 預計算測量角度
+        # 預計算測量角度 (Bloch 球面上標準 CHSH 最佳角)
+        # Alice: x=0 -> 0, x=1 -> π/2
+        # Bob:   y=0 -> π/4, y=1 -> -π/4
         self.alice_angles = {
             0: 0.0,
-            1: math.pi / 4.0
+            1: math.pi / 2.0
         }
         self.bob_angles = {
-            0: math.pi / 8.0,
-            1: -math.pi / 8.0
+            0: math.pi / 4.0,
+            1: -math.pi / 4.0
         }
 
     def respond(self, x: int, y: int) -> Tuple[int, int]:

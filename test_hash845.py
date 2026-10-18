@@ -24,12 +24,12 @@ class TestQuantumEngine(unittest.TestCase):
     def test_chsh_probabilities_ideal(self):
         """
         測試無噪訊貝爾態在 CHSH 最佳角下的理論機率值。
-        當 (theta_a, theta_b) = (0, pi/8) 時:
+        當 (theta_a, theta_b) = (0, pi/4) 時:
         P(0,0) = P(1,1) = 0.5 * cos²(pi/8) ≈ 0.4267767
         P(0,1) = P(1,0) = 0.5 * sin²(pi/8) ≈ 0.0732233
         """
         sim = BellStateSimulator(noise_prob=0.0)
-        probs = sim.measure_probabilities(0.0, math.pi / 8.0)
+        probs = sim.measure_probabilities(0.0, math.pi / 4.0)
         expected_p00 = 0.5 * (math.cos(math.pi / 8.0) ** 2)
         expected_p01 = 0.5 * (math.sin(math.pi / 8.0) ** 2)
 

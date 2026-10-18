@@ -24,6 +24,7 @@ class Hash845Verifier:
 
         # 古典貝爾定理局域隱變數上限 (Bell/CHSH inequality bound): 75%
         self.CLASSICAL_LIMIT = 0.75
+        self.CLASSICAL_UPPER_LIMIT = self.CLASSICAL_LIMIT + 0.025
 
         # 容許統計波動寬度 (3-sigma 容許區間，N=1000 時約 ±3.5%)
         self.STATISTICAL_UPPER_LIMIT = self.QUANTUM_LIMIT + 0.035
@@ -94,15 +95,15 @@ class Hash845Verifier:
                 f"({self.QUANTUM_LIMIT:.2%})，此為無條件安全的設備無關量子簽章！"
             ), actual_ratio
 
-        elif actual_ratio <= self.CLASSICAL_LIMIT:
-            # 低於或等於古典上限 75%
+        elif actual_ratio <= self.CLASSICAL_UPPER_LIMIT:
+            # 低於或等於古典上限 (含統計波動)
             return False, (
                 f"【驗證失敗 - 古典盲猜】實際關聯度: {actual_ratio:.2%}。小於等於古典局域隱變數上限 "
                 f"({self.CLASSICAL_LIMIT:.2%})，此為傳統電腦作弊或隨機演算法盲猜！"
             ), actual_ratio
 
         else:
-            # 介於 75% ~ 82.8% 之間
+            # 介於古典上限與量子門檻之間
             return False, (
                 f"【驗證失敗 - 噪訊過高】實際關聯度: {actual_ratio:.2%}。數值介於古典上限與量子有效區間之間，"
                 f"系統判定糾纏量子態遭受嚴重退極化噪訊干擾。"
